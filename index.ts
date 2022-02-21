@@ -19,7 +19,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
 const canvas: any = document.querySelector('canvas.webgl');
 
-let envMap: Texture; 
+//let envMap: Texture; 
 let camera: PerspectiveCamera; 
 let controls: OrbitControls; 
 let renderer: WebGLRenderer;
@@ -84,13 +84,13 @@ const init = () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       //envMap = pmremGenerator.fromEquirectangular(texture).texture;
 
-      scene.background = envMap;
-      scene.environment = envMap;
-      /* scene.background = texture;
-      scene.environment = texture; */
+      /* scene.background = envMap;
+      scene.environment = envMap; */
+      scene.background = texture;
+      scene.environment = texture;
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      texture.dispose();
+      //texture.dispose();
       //pmremGenerator.dispose();
 
       // model
@@ -135,7 +135,7 @@ const init = () => {
 };
 
 $('.rightbutton').on('click', () => {
-  console.log(scene.background);
+  
   layerIndex += 1;
   if (layerIndex > 4) {
     layerIndex = 4;
@@ -145,7 +145,7 @@ $('.rightbutton').on('click', () => {
 });
 
 $('.leftbutton').on('click', () => {
-  console.log(scene.background);
+  
   layerIndex -= 1;
   if (layerIndex < 0) {
     layerIndex = 0;
@@ -172,11 +172,12 @@ window.addEventListener('resize', () => {
  * Animate
  */
 const tick = () => {
+  requestAnimationFrame(tick);
+
   controls.update();
 
   renderer.render(scene, camera);
 
-  window.requestAnimationFrame(tick);
 };
 init();
 tick();
